@@ -61,6 +61,7 @@ public:
 	void AddTaskForToday(const std::string& task);
 
 	void MakeBackup(const std::string& filename);
+	void LoadBackup(const std::string& filename);
 private:
 	void AddTask(const Date& date, const Task& task);
 private:

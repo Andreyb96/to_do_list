@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 	while (command != "q")
 	{
 		ToDoList list;
+		list.LoadBackup(BACKUP_FILENAME);
 		list.AddTask("23-05-2022", "task name");
 		list.AddTaskForToday("task name");
 		list.AddTaskForToday("task name");

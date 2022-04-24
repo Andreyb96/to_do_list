@@ -71,3 +71,28 @@ void ToDoList::MakeBackup(const std::string& filename)
 		backupFile.close();
 	}
 }
+
+void ToDoList::LoadBackup(const std::string& filename)
+{
+	std::ifstream backupFile(filename);
+	std::string line;
+	if (backupFile.is_open())
+	{
+		while (std::getline(backupFile, line))
+		{
+			auto tabIt = line.find('\t');
+			auto date = BuildDate(line.substr(0, tabIt));
+			auto dateIt = _tasks.find(date);
+
+			if (dateIt == _tasks.end())
+			{
+				_tasks.insert({ date, { {line.substr(tabIt + 1)} } });
+			}
+			else
+			{
+				dateIt->second.push_back({ line.substr(tabIt + 1) });
+			}
+		}
+		backupFile.close();
+	}
+}
