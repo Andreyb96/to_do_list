@@ -10,7 +10,7 @@ void PrintHelp()
 
 int main(int argc, char *argv[])
 {
-	if (std::string(argv[1]) == "-h")
+	if (argc > 1 && std::string(argv[1]) == "-h")
 	{
 		PrintHelp();
 	}
@@ -19,6 +19,10 @@ int main(int argc, char *argv[])
 
 	while (command != "q")
 	{
+		ToDoList list;
+		list.AddTaskForToday("task name");
+		list.AddTaskForToday("task name");
+		list.AddTask("23-05-2022", "task name");
 		std::cin >> command;
 	}
 
