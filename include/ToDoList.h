@@ -60,7 +60,8 @@ public:
 	ToDoList();
 	void AddTask(const std::string& dateStr, const std::string& task);
 	void AddTaskForToday(const std::string& task);
-
+private:
+	void AddTask(const Date& date, const Task& task);
 private:
 	std::map<Date, std::vector<Task>> _tasks;
 };
