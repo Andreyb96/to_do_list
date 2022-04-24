@@ -18,6 +18,6 @@ add_subdirectory(modules)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ToDoListLib Logger)
+target_link_libraries(${PROJECT_NAME} PUBLIC ToDoListLib)
 
 add_subdirectory(tests)

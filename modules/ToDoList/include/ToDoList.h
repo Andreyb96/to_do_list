@@ -5,47 +5,7 @@
 #include <string>
 #include <vector>
 
-struct Date
-{
-	int day;
-	int month;
-	int year;
-
-	const bool operator < (const Date& date) const
-	{
-		if (year < date.year)
-		{
-			return true;
-		}
-		else if (year > date.year)
-		{
-			return false;
-		}
-		else
-		{
-			if (month < date.month)
-			{
-				return true;
-			}
-			else if (month > date.month)
-			{
-				return false;
-			}
-			else
-			{
-				if (day < date.day)
-				{
-					return true;
-				}
-				return false;
-			}
-		}
-	}
-	const bool operator == (const Date& date) const
-	{
-		return year == date.year && month == date.month && day == date.day;
-	}
-};
+#include "Date.h"
 
 struct Task
 {
@@ -59,6 +19,9 @@ public:
 
 	void AddTask(const std::string& dateStr, const std::string& task);
 	void AddTaskForToday(const std::string& task);
+
+	size_t GetTasksAmountForDate(const std::string& dateStr);
+	std::vector<Task> GetTasksForDate(const std::string& dateStr);
 
 	void MakeBackup(const std::string& filename);
 	void LoadBackup(const std::string& filename);

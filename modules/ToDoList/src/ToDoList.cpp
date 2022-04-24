@@ -101,3 +101,17 @@ void ToDoList::LoadBackup(const std::string& filename)
 		backupFile.close();
 	}
 }
+
+size_t ToDoList::GetTasksAmountForDate(const std::string& dateStr)
+{
+	auto date = BuildDate(dateStr);
+	const auto& it = _tasks.find(date);
+	return it != _tasks.end() ? it->second.size() : 0;
+}
+
+std::vector<Task> ToDoList::GetTasksForDate(const std::string& dateStr)
+{
+	auto date = BuildDate(dateStr);
+	const auto& it = _tasks.find(date);
+	return it != _tasks.end() ? it->second : std::vector<Task>();
+}

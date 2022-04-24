@@ -1,8 +1,12 @@
 #include "gtest/gtest.h"
+#include "ToDoList.h"
+#include "easylogging++.h"
 
-TEST(ToDoList, SimpleUT)
+INITIALIZE_EASYLOGGINGPP
+
+TEST(ToDoListTests, SimpleUT)
 {
-	ASSERT_TRUE(true);
+	ToDoList list;
 }
 
 int main(int argc, char **argv)
