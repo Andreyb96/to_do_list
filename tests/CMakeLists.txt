@@ -1,17 +1,13 @@
 cmake_minimum_required (VERSION 3.15)
 
-project(ToDoListMain)
+project(ToDoListTests)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB SOURCES
-	"main.cpp")
-
-add_subdirectory(modules)
+	"unitTests.cpp")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ToDoListLib Logger)
-
-add_subdirectory(tests)
+target_link_libraries(${PROJECT_NAME} PUBLIC ToDoListLib)
