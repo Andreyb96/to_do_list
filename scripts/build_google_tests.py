@@ -3,7 +3,7 @@ import os
 import shutil
 from distutils.dir_util import copy_tree
 
-COMMON_LIBS_PATH = os.getcwd();
+COMMON_LIBS_PATH = os.getcwd() + '/../binaries';
 GOOGLE_TEST_PATH = COMMON_LIBS_PATH + '/googletest'
 BUILD_PATH = GOOGLE_TEST_PATH + '/build'
 SRC_LIB_DIR = COMMON_LIBS_PATH + '/googletest/build/lib/'

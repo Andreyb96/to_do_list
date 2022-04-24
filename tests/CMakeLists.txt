@@ -1,3 +1,6 @@
+include(GoogleTest)
+include(${PROJECT_ROOT_DIR}/scripts/utils.cmake)
+
 cmake_minimum_required (VERSION 3.15)
 
 project(ToDoListTests)
@@ -10,23 +13,14 @@ set (BINARY_DIR binaries)
 file(MAKE_DIRECTORY ${BINARY_DIR})
 execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${BINARY_DIR})
 
-message(STATUS "Loading Google Tests framework...")
-execute_process(COMMAND python ${PROJECT_ROOT_DIR}/scripts/build_google_tests.py
-  WORKING_DIRECTORY ${PROJECT_ROOT_DIR}/binaries
-  RESULT_VARIABLE COMMON_LIBS_DOWNLOAD_RESULT)
-
-if (NOT ${COMMON_LIBS_DOWNLOAD_RESULT} EQUAL 0)
-    execute_process(COMMAND python3 ${PROJECT_ROOT_DIR}/scripts/build_google_tests.py
-    WORKING_DIRECTORY ${PROJECT_ROOT_DIR}/binaries
-    RESULT_VARIABLE COMMON_LIBS_DOWNLOAD_PYTHON3_RESULT)
-    if (NOT ${COMMON_LIBS_DOWNLOAD_PYTHON3_RESULT} EQUAL 0)
-        message( FATAL_ERROR "Failed while downloading common libs" )
-    endif()
-endif()
-
 file(GLOB SOURCES
 	"unitTests.cpp")
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+createExecutable(${PROJECT_NAME}
+		SOURCES ${SOURCES}
+		MODULES ToDoListLib
+		LIBS GOOGLE_TEST)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ToDoListLib)
+target_include_directories(${PROJECT_NAME} PUBLIC ${BINARIES_DIR}/include/GoogleTest)
+
+gtest_add_tests(TARGET ${PROJECT_NAME})
