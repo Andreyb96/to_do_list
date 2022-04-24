@@ -8,10 +8,8 @@ project(ToDoListTests)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set (BINARY_DIR binaries)
-
-file(MAKE_DIRECTORY ${BINARY_DIR})
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${BINARY_DIR})
+file(MAKE_DIRECTORY ${BINARIES_DIR})
+execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${BINARIES_DIR})
 
 file(GLOB SOURCES
 	"unitTests.cpp")

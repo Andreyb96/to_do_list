@@ -8,12 +8,12 @@ if((NOT ${OS} STREQUAL "win") AND (NOT ${OS} STREQUAL "linux"))
 endif()
 
 message(STATUS "Building GoogleTest...")
-execute_process(COMMAND python ${PROJECT_ROOT_DIR}/scripts/build_google_tests.py
+execute_process(COMMAND python ${SCRIPTS_DIR}/build_google_tests.py
   WORKING_DIRECTORY ${BINARIES_DIR}
   RESULT_VARIABLE BUILD_GOOGLE_TEST_PYTHON_RESULT)
 
 if (NOT ${BUILD_GOOGLE_TEST_PYTHON_RESULT} EQUAL 0)
-    execute_process(COMMAND python3 ${PROJECT_ROOT_DIR}/scripts/build_google_tests.py
+    execute_process(COMMAND python3 ${SCRIPTS_DIR}/build_google_tests.py
 		WORKING_DIRECTORY ${BINARIES_DIR}
   	RESULT_VARIABLE BUILD_GOOGLE_TEST_PYTHON3_RESULT)
     if (NOT ${BUILD_BUILD_GOOGLE_TEST_PYTHON3_RESULT} EQUAL 0)
