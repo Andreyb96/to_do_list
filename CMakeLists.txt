@@ -5,6 +5,8 @@ project(ToDoList)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+add_subdirectory(modules)
+
 file(GLOB SOURCES
 	"src/*.cpp")
 
@@ -12,5 +14,8 @@ file(GLOB HEADERS
 	"include/*.h")
 
 include_directories("include/")
+include_directories("modules/Logger")
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+target_link_libraries(${PROJECT_NAME} PUBLIC Logger)

@@ -1,14 +1,20 @@
 #include "ToDoList.h"
+#include "easylogging++.h"
 
 #include <iostream>
 
+INITIALIZE_EASYLOGGINGPP
+
 constexpr auto BACKUP_FILENAME = "backup.txt";
 
-void PrintHelp()
+namespace
 {
-	std::cout << "add <task name> <date>: Add new task for specified day" << std::endl;
-	std::cout << "add <task name>: Add new task for today" << std::endl;
-}
+	void PrintHelp()
+	{
+		std::cout << "add <task name> <date>: Add new task for specified day" << std::endl;
+		std::cout << "add <task name>: Add new task for today" << std::endl;
+	}
+} //anonymos
 
 int main(int argc, char *argv[])
 {

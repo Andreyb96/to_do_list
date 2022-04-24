@@ -1,4 +1,5 @@
 #include "ToDoList.h"
+#include "easylogging++.h"
 
 #include <ctime>
 #include <fstream>
@@ -34,12 +35,14 @@ ToDoList::ToDoList()
 
 void ToDoList::AddTask(const std::string& dateStr, const std::string& task)
 {
+	LOG(TRACE) << "Add task: " << task << " for date: " << dateStr;
 	auto date = BuildDate(dateStr);
 	AddTask(date, { task });
 }
 
 void ToDoList::AddTaskForToday(const std::string& task)
 {
+	LOG(TRACE) << "Add task: " << task << " for today";
 	auto date = GetTodaysDate();
 	AddTask(date, { task });
 }
@@ -57,6 +60,7 @@ void ToDoList::AddTask(const Date& date, const Task& task)
 
 void ToDoList::MakeBackup(const std::string& filename)
 {
+	LOG(TRACE) << "Make backup in process...";
 	std::ofstream backupFile(filename);
 	if (backupFile.is_open())
 	{
@@ -74,6 +78,7 @@ void ToDoList::MakeBackup(const std::string& filename)
 
 void ToDoList::LoadBackup(const std::string& filename)
 {
+	LOG(TRACE) << "Loading backup...";
 	std::ifstream backupFile(filename);
 	std::string line;
 	if (backupFile.is_open())
