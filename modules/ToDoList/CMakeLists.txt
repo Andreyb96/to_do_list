@@ -11,7 +11,12 @@ file(GLOB SOURCES
 file(GLOB HEADERS
 	"include/*.h")
 
-add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC Logger)
+createLib(${PROJECT_NAME} 
+			STATIC
+			HEADERS ${HEADERS} 
+			SOURCES ${SOURCES}
+			MODULES Logger Utils)
+
 target_include_directories(${PROJECT_NAME} PUBLIC "include/")
+target_include_directories(${PROJECT_NAME} PUBLIC ${MODULES_DIR}/Utils/include)

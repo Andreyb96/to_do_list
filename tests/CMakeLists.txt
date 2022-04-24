@@ -1,5 +1,4 @@
 include(GoogleTest)
-include(${PROJECT_ROOT_DIR}/scripts/utils.cmake)
 
 cmake_minimum_required (VERSION 3.15)
 

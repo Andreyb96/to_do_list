@@ -56,3 +56,22 @@ function(createExecutable TARGET_NAME)
 
 	exportCommonLibs(COMMON_LIBS_TARGET ${TARGET_NAME} LIB_NAMES ${OPTIONS_LIBS})
 endfunction(createExecutable)
+
+function(createLib TARGET_NAME TYPE)
+        set(MULTI_VALUE_ARGS HEADERS SOURCES LIBS MODULES)
+        cmake_parse_arguments(OPTIONS "" "" "${MULTI_VALUE_ARGS}" ${ARGN})
+
+        message(STATUS "Target: ${TARGET_NAME}")
+        message(STATUS "Type library: ${TYPE}")
+        message(STATUS "Headers: ${OPTIONS_HEADERS}")
+        message(STATUS "Sources: ${OPTIONS_SOURCES}")
+        message(STATUS "Link libraries: ${OPTIONS_LIBS}")
+        message(STATUS "Modules: ${OPTIONS_MODULES}")
+
+        add_library(${TARGET_NAME} ${TYPE} ${OPTIONS_HEADERS} ${OPTIONS_SOURCES})
+        link_modules(${TARGET_NAME} ${OPTIONS_MODULES})
+
+        if (useCommonLibs STREQUAL true)
+                exportCommonLibs(COMMON_LIBS_TARGET ${TARGET_NAME} LIB_NAMES ${OPTIONS_LIBS})
+        endif()
+endfunction(createLib)

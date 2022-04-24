@@ -1,34 +1,8 @@
 #include "ToDoList.h"
 #include "easylogging++.h"
+#include "Utils.h"
 
-#include <ctime>
 #include <fstream>
-
-namespace
-{
-	Date GetTodaysDate()
-	{
-		auto t = std::time(0);
-		auto currentTime = std::localtime(&t);
-		return { currentTime->tm_mday,  currentTime->tm_mon + 1, currentTime->tm_year + 1900 };
-	}
-
-	Date BuildDate(const std::string& date)
-	{
-		auto firstIt = date.find('-');
-		auto lastIt = date.find_last_of('-');
-		return { std::stoi(date.substr(0, firstIt))
-		, std::stoi(date.substr(firstIt + 1, lastIt))
-		, std::stoi(date.substr(lastIt + 1)) };
-	}
-
-	std::string BuildDateStr(const Date& date)
-	{
-		return std::to_string(date.day) +
-			'-' + std::to_string(date.month) +
-			'-' + std::to_string(date.year);
-	}
-} //anonymos
 
 ToDoList::ToDoList()
 {}
@@ -36,14 +10,14 @@ ToDoList::ToDoList()
 void ToDoList::AddTask(const std::string& dateStr, const std::string& task)
 {
 	LOG(TRACE) << "Add task: " << task << " for date: " << dateStr;
-	auto date = BuildDate(dateStr);
+	auto date = Utils::BuildDate(dateStr);
 	AddTask(date, { task });
 }
 
 void ToDoList::AddTaskForToday(const std::string& task)
 {
 	LOG(TRACE) << "Add task: " << task << " for today";
-	auto date = GetTodaysDate();
+	auto date = Utils::GetTodaysDate();
 	AddTask(date, { task });
 }
 
@@ -68,7 +42,7 @@ void ToDoList::MakeBackup(const std::string& filename)
 		{
 			for (const auto& task : tasksForDate.second)
 			{
-				backupFile << BuildDateStr(tasksForDate.first) << "\t" << task.name << "\n";
+				backupFile << Utils::BuildDateStr(tasksForDate.first) << "\t" << task.name << "\n";
 			}
 		}
 
@@ -86,7 +60,7 @@ void ToDoList::LoadBackup(const std::string& filename)
 		while (std::getline(backupFile, line))
 		{
 			auto tabIt = line.find('\t');
-			auto date = BuildDate(line.substr(0, tabIt));
+			auto date = Utils::BuildDate(line.substr(0, tabIt));
 			auto dateIt = _tasks.find(date);
 
 			if (dateIt == _tasks.end())
@@ -104,14 +78,14 @@ void ToDoList::LoadBackup(const std::string& filename)
 
 size_t ToDoList::GetTasksAmountForDate(const std::string& dateStr)
 {
-	auto date = BuildDate(dateStr);
+	auto date = Utils::BuildDate(dateStr);
 	const auto& it = _tasks.find(date);
 	return it != _tasks.end() ? it->second.size() : 0;
 }
 
 std::vector<Task> ToDoList::GetTasksForDate(const std::string& dateStr)
 {
-	auto date = BuildDate(dateStr);
+	auto date = Utils::BuildDate(dateStr);
 	const auto& it = _tasks.find(date);
 	return it != _tasks.end() ? it->second : std::vector<Task>();
 }
