@@ -1,7 +1,7 @@
 #include "ToDoList.h"
 
 #include <ctime>
-#include <iostream>
+#include <fstream>
 
 namespace
 {
@@ -19,6 +19,13 @@ namespace
 		return { std::stoi(date.substr(0, firstIt))
 		, std::stoi(date.substr(firstIt + 1, lastIt))
 		, std::stoi(date.substr(lastIt + 1)) };
+	}
+
+	std::string BuildDateStr(const Date& date)
+	{
+		return std::to_string(date.day) +
+			'-' + std::to_string(date.month) +
+			'-' + std::to_string(date.year);
 	}
 } //anonymos
 
@@ -46,4 +53,21 @@ void ToDoList::AddTask(const Date& date, const Task& task)
 		return;
 	}
 	it->second.push_back({ task });
+}
+
+void ToDoList::MakeBackup(const std::string& filename)
+{
+	std::ofstream backupFile(filename);
+	if (backupFile.is_open())
+	{
+		for (const auto& tasksForDate : _tasks)
+		{
+			for (const auto& task : tasksForDate.second)
+			{
+				backupFile << BuildDateStr(tasksForDate.first) << "\t" << task.name << "\n";
+			}
+		}
+
+		backupFile.close();
+	}
 }

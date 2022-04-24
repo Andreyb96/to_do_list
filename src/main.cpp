@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+constexpr auto BACKUP_FILENAME = "backup.txt";
+
 void PrintHelp()
 {
 	std::cout << "add <task name> <date>: Add new task for specified day" << std::endl;
@@ -20,9 +22,10 @@ int main(int argc, char *argv[])
 	while (command != "q")
 	{
 		ToDoList list;
-		list.AddTaskForToday("task name");
-		list.AddTaskForToday("task name");
 		list.AddTask("23-05-2022", "task name");
+		list.AddTaskForToday("task name");
+		list.AddTaskForToday("task name");
+		list.MakeBackup(BACKUP_FILENAME);
 		std::cin >> command;
 	}
 

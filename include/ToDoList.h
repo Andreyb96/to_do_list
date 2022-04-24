@@ -47,8 +47,6 @@ struct Date
 	}
 };
 
-
-
 struct Task
 {
 	std::string name;
@@ -58,8 +56,11 @@ class ToDoList
 {
 public:
 	ToDoList();
+
 	void AddTask(const std::string& dateStr, const std::string& task);
 	void AddTaskForToday(const std::string& task);
+
+	void MakeBackup(const std::string& filename);
 private:
 	void AddTask(const Date& date, const Task& task);
 private:
