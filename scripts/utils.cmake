@@ -75,3 +75,19 @@ function(createLib TARGET_NAME TYPE)
                 exportCommonLibs(COMMON_LIBS_TARGET ${TARGET_NAME} LIB_NAMES ${OPTIONS_LIBS})
         endif()
 endfunction(createLib)
+
+function(copyFile TARGET_NAME COMMAND_OPTION FROM TO)
+    add_custom_command(
+        TARGET ${TARGET_NAME}
+        ${COMMAND_OPTION}
+        COMMAND ${CMAKE_COMMAND} -E copy ${FROM} ${TO})
+endfunction(copyFile)
+
+function(copyFiles TARGET_NAME COMMAND_OPTION FROM TO)
+    file(GLOB FILE_PATHS ${FROM})
+    message(STATUS "FROM ${FROM} FILE_PATHS ${FILE_PATHS}")
+    foreach(FILE_PATH ${FILE_PATHS})
+        get_filename_component(FILE ${FILE_PATH} NAME)
+        copyFile(${TARGET_NAME} ${COMMAND_OPTION} ${FILE_PATH} ${TO}/${FILE})
+    endforeach()
+endfunction(copyFiles)

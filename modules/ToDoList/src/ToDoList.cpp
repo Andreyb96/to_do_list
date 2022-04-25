@@ -89,3 +89,18 @@ std::vector<Task> ToDoList::GetTasksForDate(const std::string& dateStr)
 	const auto& it = _tasks.find(date);
 	return it != _tasks.end() ? it->second : std::vector<Task>();
 }
+
+size_t ToDoList::GetDatesWithTasksAmount()
+{
+	return _tasks.size();
+}
+
+std::vector<Date> ToDoList::GetDatesWithTasks()
+{
+	std::vector<Date> result;
+	for (const auto& elem : _tasks)
+	{
+		result.push_back(elem.first);
+	}
+	return result;
+}

@@ -10,6 +10,11 @@
 struct Task
 {
 	std::string name;
+
+	const bool operator == (const Task& task) const
+	{
+		return name == task.name;
+	}
 };
 
 class ToDoList
@@ -22,6 +27,9 @@ public:
 
 	size_t GetTasksAmountForDate(const std::string& dateStr);
 	std::vector<Task> GetTasksForDate(const std::string& dateStr);
+
+	size_t GetDatesWithTasksAmount();
+	std::vector<Date> GetDatesWithTasks();
 
 	void MakeBackup(const std::string& filename);
 	void LoadBackup(const std::string& filename);

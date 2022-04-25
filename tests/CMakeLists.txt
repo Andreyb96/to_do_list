@@ -20,4 +20,6 @@ createExecutable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${BINARIES_DIR}/include/GoogleTest)
 
+copyFiles(${PROJECT_NAME} POST_BUILD ${TEST_DATA_DIR}/*.* ${CMAKE_BINARY_DIR}/tests/test_data)
+
 gtest_add_tests(TARGET ${PROJECT_NAME})
