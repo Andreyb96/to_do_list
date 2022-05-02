@@ -104,3 +104,36 @@ std::vector<Date> ToDoList::GetDatesWithTasks()
 	}
 	return result;
 }
+
+void ToDoList::RemoveTask(const std::string& dateStr, const std::string& task)
+{
+	auto& tasks = GetTasksForDate(dateStr);
+
+	auto taskIt = std::find(tasks.begin(), tasks.end(), Task({ task }));
+
+	if (taskIt == tasks.end())
+	{
+		LOG(WARNING) << "Task: " << task << " for date: " << dateStr << " doesn't exist";
+		return;
+	}
+
+	tasks.erase(std::remove(tasks.begin(), tasks.end(), Task({ task })));
+	SetTasksForDate(dateStr, tasks);
+}
+
+void ToDoList::RemoveAllTasksForDate(const std::string& dateStr)
+{
+	auto& tasks = GetTasksForDate(dateStr);
+	tasks.clear();
+}
+
+void ToDoList::RemoveAllTasks()
+{
+	_tasks.clear();
+}
+
+void ToDoList::SetTasksForDate(const std::string& dateStr, const std::vector<Task>& tasks)
+{
+	auto date = Utils::BuildDate(dateStr);
+	_tasks.insert({ date, tasks });
+}

@@ -29,6 +29,17 @@ TEST(ToDoListTests, AddTaskNormal)
 	ASSERT_TRUE(list.GetTasksForDate(DATE_NAME) == std::vector<Task>({ {TASK_NAME} }));
 }
 
+TEST(ToDoListTests, RemoveTaskNormal)
+{
+	ToDoList list;
+	list.AddTask(DATE_NAME, TASK_NAME);
+	ASSERT_TRUE(list.GetTasksAmountForDate(DATE_NAME) == 1);
+	ASSERT_TRUE(list.GetTasksForDate(DATE_NAME) == std::vector<Task>({ {TASK_NAME} }));
+	list.RemoveTask(DATE_NAME, TASK_NAME);
+	ASSERT_TRUE(list.GetTasksAmountForDate(DATE_NAME) == 0);
+	ASSERT_TRUE(list.GetTasksForDate(DATE_NAME) == std::vector<Task>());
+}
+
 TEST(ToDoListTests, LoadBackupNormal)
 {
 	ToDoList list;
