@@ -48,6 +48,7 @@ void ToDoList::MakeBackup(const std::string& filename)
 
 		backupFile.close();
 	}
+	LOG(TRACE) << "Backup successfully made...";
 }
 
 void ToDoList::LoadBackup(const std::string& filename)
@@ -74,6 +75,7 @@ void ToDoList::LoadBackup(const std::string& filename)
 		}
 		backupFile.close();
 	}
+	LOG(TRACE) << "Backup successfully loaded...";
 }
 
 size_t ToDoList::GetTasksAmountForDate(const std::string& dateStr)
@@ -107,33 +109,38 @@ std::vector<Date> ToDoList::GetDatesWithTasks()
 
 void ToDoList::RemoveTask(const std::string& dateStr, const std::string& task)
 {
-	auto& tasks = GetTasksForDate(dateStr);
+	auto& taskPairIt = _tasks.find(Utils::BuildDate(dateStr));
 
-	auto taskIt = std::find(tasks.begin(), tasks.end(), Task({ task }));
+	if (taskPairIt == _tasks.end())
+	{
+		LOG(WARNING) << "No tasks for date: " << dateStr;
+		return;
+	}
 
-	if (taskIt == tasks.end())
+	auto taskIt = std::find(taskPairIt->second.begin(), taskPairIt->second.end(), Task({ task }));
+
+	if (taskIt == taskPairIt->second.end())
 	{
 		LOG(WARNING) << "Task: " << task << " for date: " << dateStr << " doesn't exist";
 		return;
 	}
 
-	tasks.erase(std::remove(tasks.begin(), tasks.end(), Task({ task })));
-	SetTasksForDate(dateStr, tasks);
+	taskPairIt->second.erase(std::remove(taskPairIt->second.begin(), taskPairIt->second.end(), Task({ task })));
 }
 
 void ToDoList::RemoveAllTasksForDate(const std::string& dateStr)
 {
-	auto& tasks = GetTasksForDate(dateStr);
-	tasks.clear();
+	_tasks.erase(Utils::BuildDate(dateStr));
+}
+
+void ToDoList::RemoveAllTasksForToday()
+{
+	auto date = Utils::GetTodaysDate();
+	auto dateStr = Utils::BuildDateStr(date);
+	RemoveAllTasksForDate(dateStr);
 }
 
 void ToDoList::RemoveAllTasks()
 {
 	_tasks.clear();
-}
-
-void ToDoList::SetTasksForDate(const std::string& dateStr, const std::vector<Task>& tasks)
-{
-	auto date = Utils::BuildDate(dateStr);
-	_tasks.insert({ date, tasks });
 }

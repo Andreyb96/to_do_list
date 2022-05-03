@@ -12,6 +12,8 @@ namespace Utils
 	Date BuildDate(const std::string& date);
 
 	std::string BuildDateStr(const Date& date);
+
+	bool IsValidDate(const std::string& date);
 }
 
 #endif // UTILS_H

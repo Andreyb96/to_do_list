@@ -27,11 +27,11 @@ public:
 
 	void RemoveTask(const std::string& dateStr, const std::string& task);
 	void RemoveAllTasksForDate(const std::string& dateStr);
+	void RemoveAllTasksForToday();
 	void RemoveAllTasks();
 
 	size_t GetTasksAmountForDate(const std::string& dateStr);
 	std::vector<Task> GetTasksForDate(const std::string& dateStr);
-	void SetTasksForDate(const std::string& dateStr, const std::vector<Task>& tasks);
 
 	size_t GetDatesWithTasksAmount();
 	std::vector<Date> GetDatesWithTasks();
